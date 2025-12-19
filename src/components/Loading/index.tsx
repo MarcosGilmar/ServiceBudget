@@ -6,7 +6,7 @@ import { styles } from "./styles";
 export function Loading() {
     return (
         <ActivityIndicator 
-            color={colors.principal["purple-base"]}
+            color={colors.gray[100]}
             style={styles.container}
         />
     )

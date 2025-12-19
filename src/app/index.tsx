@@ -1,16 +1,19 @@
 import { router } from "expo-router";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import { fontFamily } from "../theme";
+
+import { HomeHeader } from "../components/HomeHeader";
 
 export default function Index() {
     return (
-        <View style={{ flex: 1, alignItems: "center", justifyContent:"center"}}>
-            <Text>
-                Home
-            </Text>
-            <Button title="Ir para budget" onPress={() => router.navigate("/budget")} />
-            <Button title="Ir para summary" onPress={() => router.navigate("/summary/1")}/>
-            
-        </View>
+        <SafeAreaView>
+            <View>
+                <StatusBar barStyle="dark-content"/>
+                <HomeHeader />
+                
+            </View>
+        </SafeAreaView>
     )
 }

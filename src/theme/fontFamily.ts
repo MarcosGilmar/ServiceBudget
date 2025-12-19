@@ -7,22 +7,22 @@ export const typography = {
     titleLg: {
         fontFamily: fontFamily.bold,
         fontSize: 18,
-        lineHeight: 25.2, // 18 * 1.4
+        lineHeight: 25.2
     },
     titleMd: {
         fontFamily: fontFamily.bold,
         fontSize: 16,
-        lineHeight: 22.4, // 16 * 1.4
+        lineHeight: 22.4
     },
     titleSm: {
         fontFamily: fontFamily.bold,
         fontSize: 14,
-        lineHeight: 19.6, // 14 * 1.4
+        lineHeight: 19.6
     },
     titleXs: {
         fontFamily: fontFamily.bold,
         fontSize: 12,
-        lineHeight: 16.8, // 12 * 1.4
+        lineHeight: 16.8
     },
     textMd: {
         fontFamily: fontFamily.regular,
