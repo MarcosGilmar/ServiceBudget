@@ -1,4 +1,4 @@
-package com.servicebudget
+package com.marcosg.servicebudget
 
 import android.os.Build
 import android.os.Bundle

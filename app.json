@@ -2,6 +2,16 @@
   "expo": {
     "name": "servicebudget",
     "slug": "servicebudget",
-    "version": "1.0.0"
+    "scheme": "servicebudget",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.marcosg.servicebudget"
+    },
+    "ios": {
+      "bundleIdentifier": "com.marcosg.servicebudget"
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

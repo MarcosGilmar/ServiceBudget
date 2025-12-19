@@ -1,4 +1,4 @@
-package com.servicebudget
+package com.marcosg.servicebudget
 
 import android.app.Application
 import android.content.res.Configuration
