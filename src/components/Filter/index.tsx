@@ -5,7 +5,7 @@ import { styles } from "./styles"
 import { FilterStatusConfig, FilterStatusProps } from "../../shared/FilterStatusConfig"
 import { FilterStatus } from "../../types/FilterStatus"
 
-type FilterProps = {
+export type FilterProps = {
     status: FilterStatus
 }
 

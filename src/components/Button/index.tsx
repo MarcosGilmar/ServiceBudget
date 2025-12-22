@@ -10,12 +10,13 @@ type Props = TouchableOpacityProps & {
     isLoading?: boolean
 }
 
-export function Button({ icon, title, isLoading = false, ...rest }: Props) {
+export function Button({ icon, title, isLoading = false, onPress, ...rest }: Props) {
     return (
         <TouchableOpacity 
             style={styles.container} 
             activeOpacity={0.8}
             disabled={isLoading}
+            onPress={onPress}
             {...rest}
         >
                 <View style={{ flexDirection: "row", gap: 10, opacity: isLoading ? 0 : 1}}>
