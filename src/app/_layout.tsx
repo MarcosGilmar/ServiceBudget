@@ -21,6 +21,17 @@ export default function Layout() {
             headerShown: false,
             contentStyle: { backgroundColor: "#FFFFFF" }
         }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="budget" />
+            <Stack.Screen name="summary/[id]" />
+            
+            {/* modal */}
+            <Stack.Screen 
+                name="(modals)/filters" 
+                options={{
+                    presentation: "modal"
+                }}
+            />
 
         </Stack>
     )

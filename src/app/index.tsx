@@ -103,7 +103,11 @@ export default function Index() {
                         value={search}
                         onChangeText={useSearch}
                     />
-                    <ButtonCircle icon={"tune"} color={colors.principal["purple-base"]}/>
+                    <ButtonCircle 
+                        icon={"tune"} 
+                        color={colors.principal["purple-base"]}
+                        onPress={() => router.push("/filters")}
+                    />
                 </View>
 
                 <FlatList

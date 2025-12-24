@@ -11,12 +11,16 @@ export type ThemeColors =
 
 type Props = TouchableOpacityProps & {
     icon: keyof typeof MaterialIcons.glyphMap,
-    color: ThemeColors
+    color: ThemeColors,
+    onPress: () => void
 }
 
-export function ButtonCircle({ icon, color, ...rest }: Props) {
+export function ButtonCircle({ icon, color, onPress, ...rest }: Props) {
     return (
-        <TouchableOpacity style={styles.container} >
+        <TouchableOpacity 
+            style={styles.container} 
+            onPress={onPress}
+        >
             <MaterialIcons name={icon} size={24} color={color}/>
         </TouchableOpacity>
     )
