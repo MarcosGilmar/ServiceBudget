@@ -5,34 +5,14 @@ import { Button } from "../Button";
 
 import { styles } from "./styles";
 
-const DATA = [
-{
-    id: "1",
-    title: "Design de interfaces",
-    description: "Criação de wireframes e protótipos de alta fidelidade",
-    value: "R$ 3.847,50",
-    quantity: "Qt: 1"
-},
-{
-    id: "2",
-    title: "Implantação e suporte",
-    description: "Publicação nas lojas de aplicativos e suporte técnico",
-    value: "R$ 3.847,50",
-    quantity: "Qt: 1"
-},
-{
-    id: "3",
-    title: "Implantação e suporte",
-    description: "Publicação nas lojas de aplicativos e suporte técnico",
-    value: "R$ 3.847,50",
-    quantity: "Qt: 1"
-},
-]
+type Props = {
+    data: any[]
+}
 
-export function ServicesWrapper() {
+export function ServicesWrapper({ data }: Props) {
     return (
         <View style={styles.container}>
-            {DATA.map((item) => (
+            {data.map((item) => (
                 <ServiceItem 
                     key={item.id}
                     title={item.title}

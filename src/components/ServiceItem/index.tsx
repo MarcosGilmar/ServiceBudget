@@ -4,14 +4,14 @@ import { colors } from "../../theme";
 
 import { styles } from "./styles";
 
-type Props = {
+export type ServiceItemProps = {
     title: string
     description: string
-    value: string
-    quantity: string
+    value: number
+    quantity: number
 }
 
-export function ServiceItem({ title, description, value, quantity }: Props) {
+export function ServiceItem({ title, description, value, quantity }: ServiceItemProps) {
     return (
         <View style={styles.container}>
             <View style={styles.label}>
@@ -25,8 +25,8 @@ export function ServiceItem({ title, description, value, quantity }: Props) {
                 </Text>
             </View>
             <View style={styles.info}>
-                <Text style={styles.value}>{value}</Text>
-                <Text style={styles.quantity}>{quantity}</Text>
+                <Text style={styles.value}>R$ {value}</Text>
+                <Text style={styles.quantity}>Qt: {quantity}</Text>
             </View>
             <TouchableOpacity style={styles.button}>
                 <MaterialIcons name="edit" size={15} color={colors.principal["purple-base"]}/>

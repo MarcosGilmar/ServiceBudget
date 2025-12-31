@@ -30,10 +30,16 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingHorizontal: 20
     },
-    percentage: {
+    discountInput: {
         flexDirection: "row",
-        gap: 16,
         justifyContent: "center",
+        alignItems: "center",
+        gap: 16
+    },
+    percentage: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center"
     },
     percentageWrapper: {
@@ -42,8 +48,7 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         borderWidth: 0.2,
         borderRadius: 15,
-        paddingVertical: 4,
-        paddingHorizontal: 16,
+        paddingHorizontal: 10,
         gap: 4
     },
     discountValue: {

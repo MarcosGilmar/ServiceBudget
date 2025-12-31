@@ -51,7 +51,6 @@ const DATA: ItemProps[] = [
     status: FilterStatus.DENIED,
     created_at: "2025-09-15",
     updated_at: "2025-12-12"
-
 },
 {
     id: "5",
@@ -61,7 +60,6 @@ const DATA: ItemProps[] = [
     status: FilterStatus.APPROVED,
     created_at: "2025-09-16",
     updated_at: "2025-12-12"
-
 },
 {
     id: "6",
@@ -71,7 +69,6 @@ const DATA: ItemProps[] = [
     status: FilterStatus.DRAFT,
     created_at: "2025-09-17",
     updated_at: "2025-12-12"
-
 },
 {
     id: "7",
@@ -81,7 +78,6 @@ const DATA: ItemProps[] = [
     status: FilterStatus.APPROVED,
     created_at: "2025-09-18",
     updated_at: "2025-12-12"
-
 },
 {
     id: "8",
@@ -91,7 +87,6 @@ const DATA: ItemProps[] = [
     status: FilterStatus.SEND,
     created_at: "2025-09-19",
     updated_at: "2025-12-12"
-
 },
 ];
 
