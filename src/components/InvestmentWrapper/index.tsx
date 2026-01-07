@@ -1,10 +1,8 @@
 import { View, Text, TextInput, TouchableOpacityProps } from "react-native"
-import { MaterialIcons } from "@expo/vector-icons"
 
 import { styles } from "./styles"
 
-type Props = TouchableOpacityProps & {
-    icon?: keyof typeof MaterialIcons.glyphMap,
+export type InvestmentProps = TouchableOpacityProps & {
     subtotal: number
     serviceItemQuantity: number
     discount: number
@@ -14,14 +12,13 @@ type Props = TouchableOpacityProps & {
 }
 
 export function InvestmentWrapper({ 
-    icon, 
     subtotal, 
     serviceItemQuantity, 
     discount, 
     total, 
     percentage,
     onChangePercentage 
-}: Props) {
+}: InvestmentProps) {
     
     return (
         <View style={styles.container}>
@@ -44,7 +41,7 @@ export function InvestmentWrapper({
                                 value={percentage}
                                 onChangeText={onChangePercentage}
                             />
-                            <MaterialIcons name="percent" size={15}/>
+                            <Text>%</Text>
                         </View>
                     </View>
                     <Text style={styles.discountValue}>- R$ {discount.toFixed(2)}</Text>

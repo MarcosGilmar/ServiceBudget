@@ -1,14 +1,65 @@
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext, useState } from "react";
 
 import { colors } from "../../theme";
 import { typography } from "../../theme/fontFamily";
 import { Input } from "../../components/Input";
 import { ButtonCircle } from "../../components/ButtonCircle";
 import { Button } from "../../components/Button";
+import { ServiceContext } from "../../context/ServiceContext";
 
 export default function Service() {
+    const { addService} = useContext(ServiceContext)
+
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+    const [value, setValue] = useState("")
+    const [quantity, setQuantity] = useState<number>(1)
+
+    function handleIncrement() { 
+        setQuantity((prev) => prev + 1)
+    }
+
+    function handleDecrement() {
+        if(quantity > 1) {
+            setQuantity((prev) => prev - 1)
+        }
+    }
+
+    async function handleSave() {
+        if(!title.trim()) {
+            return Alert.alert("Erro", "Campo de título não fornecido!")
+        }
+        if(!description.trim()) {
+            return Alert.alert("Erro", "Campo de descrição não fornecido!")
+        }
+        if(!value) {
+            return Alert.alert("Erro", "Campo de valor não fornecido!")
+        }
+        
+        const formattedValue = Number(value.replace(",", "."))
+
+        if(isNaN(formattedValue)) {
+            return Alert.alert("Erro", "Valor inválido! Use apenas números e vírgula.")
+        }
+
+        const newService = {
+            title: title,
+            description: description,
+            value: String(formattedValue),
+            quantity: quantity
+        }
+
+        try {
+            await addService(newService)
+            router.back()
+        } catch (error) {
+            console.log("Erro: ", error)
+            Alert.alert("Erro","Não foi possível salvar o serviço!")        }
+    }
+
     return (
         <View style={{ flex: 1, backgroundColor:'rgba(0,0,0,0.3)' }}>
             <TouchableWithoutFeedback
@@ -31,26 +82,37 @@ export default function Service() {
                         <View style={styles.inputs}>
                             <Input 
                                 placeholder="Título do serviço"
+                                value={title}
+                                onChangeText={setTitle}
                             />
                             <Input 
                                 variant="sized"
-                                placeholder="Descrição do serviço"    
+                                placeholder="Descrição do serviço"
+                                value={description}
+                                onChangeText={setDescription}    
                             />
                             <View style={{ width: "100%", flexDirection: "row", gap: 12}}>
                                 <Input 
                                     style={{ width: 220}}
                                     variant= "value"
-                                    placeholder="3847,50"
+                                    placeholder="Insira o valor"
+                                    value={value}
+                                    onChangeText={setValue}
+                                    keyboardType="numeric"
                                 />
                                 <View
                                     style={styles.countView}
                                 >
                                     <View style={styles.count}>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={handleIncrement}
+                                        >
                                             <MaterialIcons name="add" size={18} color={colors.principal["purple-base"]}/>
                                         </TouchableOpacity>
-                                        <Text>1</Text>
-                                        <TouchableOpacity>
+                                        <Text>{quantity}</Text>
+                                        <TouchableOpacity
+                                            onPress={handleDecrement}
+                                        >
                                             <MaterialIcons name="remove" size={18} color={colors.principal["purple-base"]}/>
                                         </TouchableOpacity>
                                     </View>
@@ -67,6 +129,7 @@ export default function Service() {
                             <Button 
                                 icon="check"
                                 title="Salvar"
+                                onPress={handleSave}
                             />
                         </View>
                     </View>

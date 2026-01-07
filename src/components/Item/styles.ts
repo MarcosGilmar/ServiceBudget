@@ -8,8 +8,11 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         padding: 16,
-        backgroundColor: colors.gray[100],
-        borderRadius: 15
+        backgroundColor: colors.gray[200],
+        borderWidth: 0.2,
+        borderColor: colors.gray[400],
+        borderRadius: 15,
+        marginVertical: 5
     },
     content: {
         flex: 1, 

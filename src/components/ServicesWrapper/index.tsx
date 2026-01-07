@@ -13,9 +13,9 @@ type Props = {
 export function ServicesWrapper({ data, onPress }: Props) {
     return (
         <View style={styles.container}>
-            {data.map((item) => (
+            {data.map((item, index) => (
                 <ServiceItem 
-                    key={item.id}
+                    key={item.id ?? index}
                     title={item.title}
                     description={item.description}
                     value={item.value}

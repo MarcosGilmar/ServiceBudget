@@ -12,91 +12,16 @@ import { Item, ItemProps } from "../components/Item";
 import { FilterStatus } from "../types/FilterStatus";
 import { FilterContext } from "../context/FilterContext";
 import { DismissKeyboardView } from "../components/DismissKeyboardView";
-
-const DATA: ItemProps[] = [
-{
-    id: "1",
-    title: "Desenvolvimento de aplicativo de loja online",
-    label: "Soluções Tecnológicas Beta",
-    value: 22300,
-    status: FilterStatus.APPROVED,
-    created_at: "2025-09-12",
-    updated_at: "2025-12-12"
-
-},
-{
-    id: "2",
-    title: "Sistema de gestão financeira",
-    label: "Alpha Consultoria",
-    value: 15800,
-    status: FilterStatus.SEND,
-    created_at: "2025-09-13",
-    updated_at: "2025-12-12"
-
-},
-{
-    id: "3",
-    title: "Criação de website institucional",
-    label: "Agência Criativa Nimbus",
-    value: 8500,
-    status: FilterStatus.APPROVED,
-    created_at: "2025-09-14",
-    updated_at: "2025-12-12"
-},
-{
-    id: "4",
-    title: "Aplicativo mobile para delivery",
-    label: "Restaurante Sabor & Arte",
-    value: 18200,
-    status: FilterStatus.DENIED,
-    created_at: "2025-09-15",
-    updated_at: "2025-12-12"
-},
-{
-    id: "5",
-    title: "Plataforma de e-commerce B2B",
-    label: "Indústrias Monte Verde",
-    value: 35000,
-    status: FilterStatus.APPROVED,
-    created_at: "2025-09-16",
-    updated_at: "2025-12-12"
-},
-{
-    id: "6",
-    title: "Sistema interno de controle de estoque",
-    label: "Distribuidora Central",
-    value: 12400,
-    status: FilterStatus.DRAFT,
-    created_at: "2025-09-17",
-    updated_at: "2025-12-12"
-},
-{
-    id: "7",
-    title: "Redesign de identidade visual",
-    label: "Studio Criativo Aurora",
-    value: 6900,
-    status: FilterStatus.APPROVED,
-    created_at: "2025-09-18",
-    updated_at: "2025-12-12"
-},
-{
-    id: "8",
-    title: "Dashboard de indicadores empresariais",
-    label: "Grupo Empresarial Horizonte",
-    value: 19750,
-    status: FilterStatus.SEND,
-    created_at: "2025-09-19",
-    updated_at: "2025-12-12"
-},
-];
+import { BudgetContext } from "../context/BudgetContext";
 
 export default function Index() {
+    const { budgetList } = useContext(BudgetContext)
     const {selectedStatus, sortBy} = useContext(FilterContext)
 
     const [search, useSearch] = useState("")
 
     const filteredData = useMemo(() => {
-        let result = [...DATA];
+        let result = [...budgetList];
 
         //input verification
         if(search.trim()) {
@@ -104,7 +29,7 @@ export default function Index() {
 
             result = result.filter((item) => (
                 item.title.toLowerCase().includes(searchLower) ||
-                item.label.toLowerCase().includes(searchLower) 
+                item.client.toLowerCase().includes(searchLower) 
             ))
         }
         //status verification
@@ -130,7 +55,7 @@ export default function Index() {
             })
         }
         return result
-    }, [search, selectedStatus, sortBy])
+    }, [budgetList, search, selectedStatus, sortBy])
 
     return (
         <DismissKeyboardView>
@@ -162,11 +87,12 @@ export default function Index() {
                         <Item 
                             id={item.id}
                             title={item.title}
-                            label={item.label}
+                            client={item.client}
                             value={item.value}
                             status={item.status}
                             created_at={item.created_at}
                             updated_at={item.updated_at}
+                            onPress={() => router.push(`/summary/${item.id}`)}
                         />
                     )}
                     showsVerticalScrollIndicator={false}

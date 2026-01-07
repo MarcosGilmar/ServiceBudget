@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback, useMemo, ReactNode } from "react";
+import { createContext, useState, useCallback, ReactNode } from "react";
 import { FilterStatus } from "../types/FilterStatus";
 
 export type SortOption = "biggestValue" | "smallestValue" | "oldest" | "latest" | null
