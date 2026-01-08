@@ -11,7 +11,13 @@ import { Button } from "../../components/Button";
 import { ServiceContext } from "../../context/ServiceContext";
 
 export default function Service() {
-    const { addService, selectedService, updateService, setSelectedService} = useContext(ServiceContext)
+    const { 
+        addService, 
+        selectedService, 
+        updateService, 
+        setSelectedService,
+        deleteService
+    } = useContext(ServiceContext)
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -81,6 +87,17 @@ export default function Service() {
             Alert.alert("Erro","Não foi possível salvar o serviço!")        }
     }
 
+    function handleDelete() {
+        Alert.alert("Remover", "Tem certeza que quer remover o serviço?", [
+            { text: 'Sim', onPress: async () => (
+                await deleteService(selectedService), 
+                setSelectedService(null), 
+                router.back()
+            )},
+            { text: 'Não', style: "cancel"}
+        ])
+    }
+
     return (
         <View style={{ flex: 1, backgroundColor:'rgba(0,0,0,0.3)' }}>
             <TouchableWithoutFeedback
@@ -146,10 +163,13 @@ export default function Service() {
                         </View>
 
                         <View style={styles.buttons}>
-                            <ButtonCircle 
-                                icon="delete" 
-                                color={colors.feedback["danger-base"]}
-                            />
+                            {selectedService && (
+                                <ButtonCircle 
+                                    icon="delete" 
+                                    color={colors.feedback["danger-base"]}
+                                    onPress={handleDelete}
+                                />
+                            )}
                             <Button 
                                 icon="check"
                                 title="Salvar"

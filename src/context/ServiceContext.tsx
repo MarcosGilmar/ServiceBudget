@@ -6,6 +6,7 @@ type ServiceContextData = {
     selectedService: ServiceStorageProps | null
     addService: (newService: ServiceStorageProps) => Promise<void>
     updateService: (updatedService: ServiceStorageProps) => Promise<void>
+    deleteService: (deletedService: ServiceStorageProps) => Promise<void>
     setSelectedService: (selectedService: ServiceStorageProps | null) => void
 }
 
@@ -41,6 +42,16 @@ export function ServiceProvider({children}: {children: ReactNode}) {
         await serviceStorage.save(newList)
     }
 
+    async function deleteService(deletedService: ServiceStorageProps) {
+        const newList = serviceList.filter((service) => (
+            service.id !== deletedService.id
+        ))
+
+        setServiceList(newList)
+
+        await serviceStorage.save(newList)
+    }
+
     return (
         <ServiceContext.Provider
             value={{
@@ -48,7 +59,8 @@ export function ServiceProvider({children}: {children: ReactNode}) {
                 selectedService,
                 addService,
                 updateService,
-                setSelectedService
+                setSelectedService,
+                deleteService
             }}
         >
             {children}
