@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
         borderRadius: 15, 
         borderColor: colors.gray[400],
         marginTop: 20,
-        overflow: "hidden"
     },
     line: {
         height: 1,
@@ -22,14 +21,17 @@ export const styles = StyleSheet.create({
         paddingVertical: 12,
         gap: 8,
         alignItems: "center",
+
     },
     title: {
         color: colors.gray[500],
-        ...typography.textXs
+        ...typography.textXs,
+        flexShrink: 1
     },
     titleVariant: {
         color: colors.gray[800],
-        ...typography.titleLg
+        ...typography.titleLg,
+        flexShrink: 1
     },
     children: {
         gap: 12

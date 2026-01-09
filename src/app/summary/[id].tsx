@@ -19,6 +19,7 @@ import { colors } from "../../theme";
 import { typography } from "../../theme/fontFamily";
 
 import { useInvestmentCalculations } from "../../hooks/useInvesmentCalculations";
+import { BudgetStorageProps } from "../../storage/budgetStorage";
 
 export default function Summary() {
     const {serviceList} = useContext(ServiceContext)
@@ -28,12 +29,39 @@ export default function Summary() {
         selectedBudget, 
         setSelectedBudget,
         updateBudget,
-        deleteBudget
+        deleteBudget,
+        addBudget
     } = useContext(BudgetContext)
 
     const params = useLocalSearchParams<{id: string}>()
 
-    const {subtotal, total, discountPercentage, discountValue, serviceLength} = useInvestmentCalculations(selectedBudget.services, Number(selectedBudget.discount))
+    if(!selectedBudget) {
+        return null
+    }
+
+    const {
+        subtotal, 
+        total, 
+        discountPercentage, 
+        discountValue, 
+        serviceLength
+    } = useInvestmentCalculations(selectedBudget.services, selectedBudget.discount)
+
+    async function handleDuplicate(selectedBudget: BudgetStorageProps) {
+        
+        const newBudgetCopy  = {
+            ...selectedBudget,
+            id: Date.now().toString(),
+            title: selectedBudget.title + " - Cópia",
+            created_at: new Date().toISOString().split('T')[0],
+            updated_at: new Date().toISOString().split('T')[0] 
+        }
+
+        await addBudget(newBudgetCopy)
+        setSelectedBudget(null)
+        router.back()
+    }
+
 
     return(
         <DismissKeyboardView>
@@ -105,14 +133,12 @@ export default function Summary() {
                     <ButtonCircle 
                         icon="content-copy"
                         color={colors.principal["purple-base"]}
-                        //duplicar
+                        onPress={() => handleDuplicate(selectedBudget)}
                     />
                     <ButtonCircle 
                         icon="edit"
                         color={colors.principal["purple-base"]}
-                        onPress={() => {
-                            //falta algo
-                        }}
+                        onPress={() => router.push("/budget")}
                     />
                 </View>
                 <Button 

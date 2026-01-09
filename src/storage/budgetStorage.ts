@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { ServiceItemProps } from "../components/ServiceItem";
 import { InvestmentProps } from "../components/InvestmentWrapper";
 import { FilterStatus } from "../enums/FilterStatus";
+import { ServiceStorageProps } from "./serviceStorage";
 
 const ITEMS_BUDGET_KEY = "@budget:items"
 
@@ -14,7 +14,7 @@ export type  BudgetStorageProps = {
     status: FilterStatus
     created_at: string
     updated_at: string
-    services: ServiceItemProps[],
+    services: ServiceStorageProps[],
     discount: number
 }
 

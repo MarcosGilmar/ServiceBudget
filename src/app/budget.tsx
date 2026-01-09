@@ -24,8 +24,8 @@ import { ServiceStorageProps } from "../storage/serviceStorage";
 import { useInvestmentCalculations } from "../hooks/useInvesmentCalculations";
 
 export default function Budget() {
-    const { serviceList, setSelectedService, clearService} = useContext(ServiceContext)
-    const { addBudget, setSelectedBudget } = useContext(BudgetContext)
+    const { serviceList, setSelectedService, clearService, loadServices} = useContext(ServiceContext)
+    const { addBudget, selectedBudget, setSelectedBudget, updateBudget } = useContext(BudgetContext)
 
     const [title, setTitle] = useState("")
     const [client, setClient] = useState("")
@@ -34,10 +34,18 @@ export default function Budget() {
 
     useEffect(() => {
         clearService()
-    }
-    , [])
 
-    const {subtotal, total, discountValue, serviceLength} = useInvestmentCalculations(serviceList, Number(discount)) 
+        if(selectedBudget) {
+            setTitle(selectedBudget.title)
+            setClient(selectedBudget.client)
+            setStatus(selectedBudget.status)
+            setDiscount(String(selectedBudget.discount))
+            loadServices(selectedBudget.services || [])
+        }
+    }
+    , [selectedBudget])
+
+    const {subtotal, total, discountPercentage, discountValue, serviceLength} = useInvestmentCalculations(serviceList, Number(discount)) 
 
     async function handleSave() {
         if(!title.trim()) {
@@ -53,23 +61,28 @@ export default function Budget() {
         const formattedServices = (serviceList || []).map((item) => ({
             ...item,
             quantity: Number(item.quantity),
-            value: Number(String(item.value).replace('.', ','))
+            value: String(item.value)
         }))
 
         const newBudget = {
-            id: Date.now().toString(),
+            id: selectedBudget?.id || Date.now().toString(),
             title: title,
             client: client,
             value: total,
             status: status,
-            created_at: new Date().toISOString().split('T')[0],
+            created_at: selectedBudget?.created_at ||new Date().toISOString().split('T')[0],
             updated_at: new Date().toISOString().split('T')[0],
             services: formattedServices,
             discount: Number(discount)
         }
         
         try {
-            await addBudget(newBudget)
+            if(selectedBudget) {
+                await updateBudget(newBudget)
+                setSelectedBudget(newBudget)
+            } else {
+                await addBudget(newBudget)
+            }
             clearService()
             router.back()
         } catch (error) {
@@ -133,6 +146,7 @@ export default function Budget() {
                             serviceItemQuantity={serviceLength}
                             discount={discountValue}
                             total={total}
+                            percentage={discount}
                             onChangePercentage={setDiscount}
                         />
                     </Wrapper>

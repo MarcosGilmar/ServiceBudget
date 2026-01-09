@@ -65,7 +65,11 @@ export default function Index() {
                 <StatusBar barStyle="dark-content"/>
                 <HomeHeader 
                     itemQuantity={filteredData.length} 
-                    onPress={() => router.push("/budget")}/>
+                    onPress={() => {
+                        router.push("/budget")
+                        setSelectedBudget(null)
+                    }}
+                    />
 
                 <View style={{ paddingVertical: 24, flexDirection: "row", gap: 8 }}>
                     <Input 
