@@ -9,13 +9,15 @@ import { Input } from "../components/Input";
 import { ButtonCircle } from "../components/ButtonCircle";
 import { Filter } from "../components/Filter";
 import { Item, ItemProps } from "../components/Item";
-import { FilterStatus } from "../enums/FilterStatus";
-import { FilterContext } from "../context/FilterContext";
 import { DismissKeyboardView } from "../components/DismissKeyboardView";
+
+import { FilterStatus } from "../enums/FilterStatus";
+
+import { FilterContext } from "../context/FilterContext";
 import { BudgetContext } from "../context/BudgetContext";
 
 export default function Index() {
-    const { budgetList } = useContext(BudgetContext)
+    const { budgetList, setSelectedBudget } = useContext(BudgetContext)
     const {selectedStatus, sortBy} = useContext(FilterContext)
 
     const [search, useSearch] = useState("")
@@ -92,7 +94,10 @@ export default function Index() {
                             status={item.status}
                             created_at={item.created_at}
                             updated_at={item.updated_at}
-                            onPress={() => router.push(`/summary/${item.id}`)}
+                            onPress={() => {
+                                setSelectedBudget(item)
+                                router.push(`/summary/${item.id}`)
+                            }}
                         />
                     )}
                     showsVerticalScrollIndicator={false}

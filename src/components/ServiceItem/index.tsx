@@ -30,9 +30,11 @@ export function ServiceItem({ id, title, description, value, quantity, onEdit }:
                 <Text style={styles.value}>R$ {value}</Text>
                 <Text style={styles.quantity}>Qt: {quantity}</Text>
             </View>
-            <TouchableOpacity style={styles.button} onPress={onEdit}>
-                <MaterialIcons name="edit" size={15} color={colors.principal["purple-base"]}/>
-            </TouchableOpacity>
+            {onEdit && (
+                <TouchableOpacity style={styles.button} onPress={onEdit}>
+                    <MaterialIcons name="edit" size={15} color={colors.principal["purple-base"]}/>
+                </TouchableOpacity>
+            )}
         </View>
     )
 }

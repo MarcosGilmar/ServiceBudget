@@ -2,7 +2,7 @@ import { View, Text } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 
 import { styles } from "./styles"
-import { FilterStatusConfig, FilterStatusProps } from "../../shared/FilterStatusConfig"
+import { FilterStatusConfig, FilterStatusProps } from "../../constants/FilterStatusConfig"
 import { FilterStatus } from "../../enums/FilterStatus"
 
 export type FilterProps = {

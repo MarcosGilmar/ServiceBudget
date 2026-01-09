@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { View, Text, ScrollView, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { BudgetHeader } from "../components/BudgetHeader";
 import { Wrapper } from "../components/Wrapper";
@@ -21,28 +21,23 @@ import { colors } from "../theme";
 import { BudgetContext } from "../context/BudgetContext";
 import { ServiceContext } from "../context/ServiceContext";
 import { ServiceStorageProps } from "../storage/serviceStorage";
+import { useInvestmentCalculations } from "../hooks/useInvesmentCalculations";
 
 export default function Budget() {
-    const { serviceList, setSelectedService} = useContext(ServiceContext)
-    const { addBudget } = useContext(BudgetContext)
+    const { serviceList, setSelectedService, clearService} = useContext(ServiceContext)
+    const { addBudget, setSelectedBudget } = useContext(BudgetContext)
 
     const [title, setTitle] = useState("")
     const [client, setClient] = useState("")
     const [status, setStatus] = useState<FilterStatus | null>(null)
     const [discount, setDiscount] = useState("")
 
-    const subtotal = (serviceList || []).reduce((accumulator, currentValue) => {
-        const price = Number(currentValue.value)
+    useEffect(() => {
+        clearService()
+    }
+    , [])
 
-        const quantity = Number(currentValue.quantity) || 1
-
-        return accumulator + (price * quantity)
-    } , 0)
-
-    const discountPercentage = Number(discount) || 0
-    const discountValue = subtotal * (discountPercentage)/100
-
-    const total = subtotal - discountValue
+    const {subtotal, total, discountValue, serviceLength} = useInvestmentCalculations(serviceList, Number(discount)) 
 
     async function handleSave() {
         if(!title.trim()) {
@@ -58,7 +53,7 @@ export default function Budget() {
         const formattedServices = (serviceList || []).map((item) => ({
             ...item,
             quantity: Number(item.quantity),
-            value: Number(String(item.value).replace(',', '.'))
+            value: Number(String(item.value).replace('.', ','))
         }))
 
         const newBudget = {
@@ -67,14 +62,15 @@ export default function Budget() {
             client: client,
             value: total,
             status: status,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
+            created_at: new Date().toISOString().split('T')[0],
+            updated_at: new Date().toISOString().split('T')[0],
             services: formattedServices,
             discount: Number(discount)
         }
         
         try {
             await addBudget(newBudget)
+            clearService()
             router.back()
         } catch (error) {
             console.log("Erro: ", error)
@@ -134,7 +130,7 @@ export default function Budget() {
                     <Wrapper icon="credit-card" title="Investimento">
                         <InvestmentWrapper 
                             subtotal={subtotal}
-                            serviceItemQuantity={serviceList.length}
+                            serviceItemQuantity={serviceLength}
                             discount={discountValue}
                             total={total}
                             onChangePercentage={setDiscount}
@@ -160,7 +156,6 @@ export default function Budget() {
                             icon={"check"}
                             title="Salvar"
                             onPress={handleSave}
-
                         />
                     </View>
             </ScrollView>

@@ -27,6 +27,10 @@ export const styles = StyleSheet.create({
         color: colors.gray[500],
         ...typography.textXs
     },
+    titleVariant: {
+        color: colors.gray[800],
+        ...typography.titleLg
+    },
     children: {
         gap: 12
     }

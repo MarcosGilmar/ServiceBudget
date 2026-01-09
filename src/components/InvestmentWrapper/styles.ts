@@ -78,5 +78,10 @@ export const styles = StyleSheet.create({
     finalInvestment: {
         flexDirection: "column",
         alignItems: "flex-end"
+    },
+    discountOff: {
+        backgroundColor: colors.feedback["success-light"],
+        borderRadius: 5,
+        paddingHorizontal: 10
     }
 })

@@ -60,7 +60,7 @@ export default function Service() {
             return Alert.alert("Erro", "Campo de valor não fornecido!")
         }
         
-        const formattedValue = Number(value.replace(",", "."))
+        const formattedValue = Number(value.replace(".", ","))
 
         if(isNaN(formattedValue)) {
             return Alert.alert("Erro", "Valor inválido! Use apenas números e vírgula.")
@@ -84,7 +84,8 @@ export default function Service() {
             setSelectedService(null)
         } catch (error) {
             console.log("Erro: ", error)
-            Alert.alert("Erro","Não foi possível salvar o serviço!")        }
+            Alert.alert("Erro","Não foi possível salvar o serviço!")        
+        }
     }
 
     function handleDelete() {

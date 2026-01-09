@@ -7,11 +7,11 @@ import { styles } from "./styles";
 
 type Props = {
     data: any[]
-    onPress: () => void
-    onEdit: (item: any) => void
+    onPress?: () => void
+    onEdit?: (item: any) => void
 }
 
-export function ServicesWrapper({ data, onPress, onEdit }: Props) {
+export function ServicesWrapper({ data, onPress, onEdit}: Props) {
     return (
         <View style={styles.container}>
             {data.map((item, index) => (
@@ -22,15 +22,17 @@ export function ServicesWrapper({ data, onPress, onEdit }: Props) {
                     description={item.description}
                     value={item.value}
                     quantity={item.quantity}
-                    onEdit={() => onEdit?.(item)}
+                    onEdit={onEdit ? () =>  onEdit(item) : undefined}
                 />
             ))}
-            <Button 
-                icon={"add"}
-                title="Adicionar serviço"
-                variant="white"
-                onPress={onPress}
-            />
+            { onPress && (
+                <Button 
+                    icon={"add"}
+                    title="Adicionar serviço"
+                    variant="white"
+                    onPress={onPress}
+                />
+            )}
         </View>
     )
 }
